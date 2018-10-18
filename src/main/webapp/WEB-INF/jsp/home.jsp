@@ -10,16 +10,31 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script>
 
-var app = angular.module('myApp', []);
-app.controller('myCtrl', function($scope) {
- $scope.msg='Hello';
-});
-</script>
 
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
   <h1 class="btn"> {{msg}}</h1> 
+  
+  <table>
+  <tr ng-repeat="x in mytable">
+  <td></td>{{x.empid}}
+  </tr>
+  
+  </table>
+  <script>
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope,$http) {
+ $scope.msg='Hello';
+ 
+ $http.get("/rest/all")
+ .then(function (response) {$scope.names = response.data.records;
+ console.log($scope.names);
+ console.log(angular);
+ });
+ 
+});
+</script>
 </body>
 </html>
