@@ -4,7 +4,18 @@ public class Employee {
 	
 	private int empid;
 	private String empname;
+	private int salary;
 	
+	
+	
+	public int getSalary() {
+		return salary;
+	}
+
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+
 	public Employee() {
 		
 	}
@@ -13,6 +24,7 @@ public class Employee {
 		super();
 		this.empid = empid;
 		this.empname = empname;
+		this.salary = ((int)(Math.random()*100000));
 	}
 	public int getEmpid() {
 		return empid;

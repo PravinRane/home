@@ -15,10 +15,25 @@
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
   <h1 class="btn"> {{msg}}</h1> 
+ 
+  <div style="width: 50%; margin-left: 20px;" class="panel">
+    <label class="panel-header panel-header-primary"> Filter Table:</label>
+    <input type="text" ng-model="filterBy">
+  </div>
   
-  <table>
-  <tr ng-repeat="x in mytable">
-  <td></td>{{x.empid}}
+  <table class="table table-bordered" style="width: 50%; margin-left: 20px">
+  
+ 
+  <thead style="cursor: pointer;"> <tr>
+   <th ng-click="orderby='empid'; reverseOrder();">Employee Id</th>
+    <th ng-click="orderby='empname'; reverseOrder();">Employee Name</th>
+     <th ng-click="orderby='salary'; reverseOrder(); ">Employee Salary</th>
+  </tr></thead>
+  
+  <tr ng-repeat="x in mytable | orderBy : orderby: reverse | filter : filterBy">
+  <td>{{x.empid}}</td>
+  <td>{{x.empname}}</td>
+  <td>{{x.salary}}</td>
   </tr>
   
   </table>
@@ -27,12 +42,16 @@
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope,$http) {
  $scope.msg='Hello';
- 
+ $scope.reverse = true;
  $http.get("/rest/all")
- .then(function (response) {$scope.names = response.data.records;
- console.log($scope.names);
- console.log(angular);
+ .then(function (response) {$scope.mytable = response.data;
+ 
  });
+ 
+ $scope.reverseOrder = function(){
+	 
+	 $scope.reverse  = !$scope.reverse ;
+ }
  
 });
 </script>
